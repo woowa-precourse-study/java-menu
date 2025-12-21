@@ -49,16 +49,20 @@ public class Application {
             names = List.of(nameInput.split(","));
 
             // 두번째 입력하기
+            try{
+                for (String name: names){
+                    hateMenu.put(name,new ArrayList<>());
 
+                    System.out.printf("\n%s(이)가 못 먹는 메뉴를 입력해 주세요.\n",name);
+                    String foodInput = readInputWithRetry(List.of(
+                            input ->
+                                    Validator.validateFoodMaxNumber(input, 2)
+                    ));
+                    List<String> foods = List.of(foodInput.split(","));
+                    hateMenu.replace(name,foods);
+                }
+            } catch(NullPointerException e){
 
-            for (String name: names){
-                System.out.printf("\n%s(이)가 못 먹는 메뉴를 입력해 주세요.\n",name);
-                String foodInput = readInputWithRetry(List.of(
-                        input ->
-                                Validator.validateFoodMaxNumber(input, 2)
-                ));
-                List<String> foods = List.of(foodInput.split(","));
-                hateMenu.put(name,foods);
             }
 
 
@@ -66,6 +70,8 @@ public class Application {
         } catch(IllegalArgumentException | NoSuchElementException e){ // 입력안함은 여기서 자동 제거
             System.out.println(PREFIX_ERROR+e.getMessage());
         }
+
+
 
         Set recommendedCategories=new HashSet();
         // 월 ~ 금까지 메뉴 추천
@@ -83,16 +89,16 @@ public class Application {
 
             for (String name:names){
                 String menu="INVALID";
+                if (!finalRecommenedMenu.containsKey(name)){
+                    finalRecommenedMenu.put(name,new ArrayList<>());
+                }
+
                 while(menu.equals("INVALID")){
                     menu = Randoms.shuffle(menus).get(0);
                     // 해당 코치가 싫어하는 음식인지 확인 + 이미 먹은 음식인지 확인
                     if (hateMenu.get(name).contains(menu) || finalRecommenedMenu.get(name).contains(menu)){
                         menu="INVALID";
                         continue;
-                    }
-
-                    if (!finalRecommenedMenu.containsKey(name)){
-                        finalRecommenedMenu.put(name,new ArrayList<>());
                     }
 
                     finalRecommenedMenu.get(name).add(menu);
@@ -107,6 +113,7 @@ public class Application {
 
         System.out.println("메뉴 추천 결과입니다.");
         System.out.println("[ 구분 | 월요일 | 화요일 | 수요일 | 목요일 | 금요일 ]");
+        System.out.println("[ 카테고리 | 한식 | 양식 | 일식 | 중식 | 아시안 ]");
         for (String name:names ){
             System.out.printf("[ %s | %s ]\n",name,String.join(" | ",finalRecommenedMenu.get(name)));
         }
