@@ -7,14 +7,11 @@ public class ImpossibilityMenu {
 
     public static final int MAX_IMPOSSIBILITY_MENUS_COUNT = 2;
 
-    private final Person person;
     private final List<String> impossibilityMenus;
 
-    public ImpossibilityMenu(Person person, List<String> impossibilityMenus) {
+    public ImpossibilityMenu(List<String> impossibilityMenus) {
         validate(impossibilityMenus);
-        impossibilityMenus
-                .forEach(MenuBoard::validateMenuName);
-        this.person = person;
+        impossibilityMenus.forEach(MenuBoard::validateMenuName);
         this.impossibilityMenus = impossibilityMenus;
     }
 
@@ -22,10 +19,6 @@ public class ImpossibilityMenu {
         if (impossibilityMenus.size() > MAX_IMPOSSIBILITY_MENUS_COUNT) {
             throw new IllegalArgumentException(ErrorCode.INVALID_MAX_IMPOSSIBILITY_MENUS_COUNT.getMessage());
         }
-    }
-
-    public Person getPerson() {
-        return person;
     }
 
     public List<String> getImpossibilityMenus() {

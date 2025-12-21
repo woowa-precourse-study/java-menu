@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 import menu.domain.FoodCategory;
 import menu.domain.ImpossibilityMenu;
+import menu.domain.ImpossibilityMenus;
 import menu.domain.MenuBoard;
 import menu.domain.Person;
 import menu.domain.Persons;
@@ -27,24 +28,14 @@ public class MenuRecommendation {
     public void run() {
         outputView.printStartApplication();
         Persons persons = retryOnError(this::getPersons);
-        List<ImpossibilityMenu> impossibilityMenus = new ArrayList<>();
-        for (Person person : persons.getPersons()) {
-            ImpossibilityMenu impossibilityMenu = retryOnError(() -> {
-                List<String> menus = inputView.readImpossibilityMenuName(person.getName());
-                return new ImpossibilityMenu(person, menus);
-            });
-            impossibilityMenus.add(impossibilityMenu);
-        }
+        ImpossibilityMenus impossibilityMenus = getImpossibilityMenus(persons);
         List<FoodCategory> categories = new ArrayList<>();
         while (categories.size() < 5) {
             FoodCategory category = FoodCategory.from(Randoms.pickNumberInRange(1, 5));
-            int count = 0;
-            for (FoodCategory existingCategory : categories) {
-                if (existingCategory == category) {
-                    count++;
-                }
-            }
-            if (count < 2) {
+            List<FoodCategory> foodCategories = categories.stream()
+                    .filter(existingCategory -> existingCategory == category)
+                    .toList();
+            if (foodCategories.size() < 2) {
                 categories.add(category);
             }
         }
@@ -55,11 +46,8 @@ public class MenuRecommendation {
         for (FoodCategory category : categories) {
             for (Person person : persons.getPersons()) {
                 while (true) {
-                    String menu = MenuBoard.getMenusExcluding(category, impossibilityMenus.stream()
-                            .filter(im -> im.getPerson().equals(person))
-                            .findFirst()
-                            .orElseThrow()
-                            .getImpossibilityMenus());
+                    List<String> impossibilityMenu = impossibilityMenus.getImpossibilityMenu(person);
+                    String menu = MenuBoard.getMenusExcluding(category, impossibilityMenu);
                     if (!recommendMenus.get(person).contains(menu)) {
                         recommendMenus.get(person).add(menu);
                         break;
@@ -70,11 +58,6 @@ public class MenuRecommendation {
         outputView.printRecommendationResult(categories, recommendMenus);
     }
 
-    private Persons getPersons() {
-        List<String> personNames = inputView.readPersonNames();
-        return new Persons(personNames);
-    }
-
     private <T> T retryOnError(Supplier<T> supplier) {
         while (true) {
             try {
@@ -83,5 +66,24 @@ public class MenuRecommendation {
                 outputView.printErrorMessage(e.getMessage());
             }
         }
+    }
+
+    private Persons getPersons() {
+        List<String> personNames = inputView.readPersonNames();
+        return new Persons(personNames);
+    }
+
+    private ImpossibilityMenus getImpossibilityMenus(Persons persons) {
+        ImpossibilityMenus impossibilityMenus = new ImpossibilityMenus();
+        for (Person person : persons.getPersons()) {
+            ImpossibilityMenu menu = retryOnError(() -> getImpossibilityMenu(person));
+            impossibilityMenus.addImpossibilityMenu(person, menu);
+        }
+        return impossibilityMenus;
+    }
+
+    private ImpossibilityMenu getImpossibilityMenu(Person person) {
+        List<String> menus = inputView.readImpossibilityMenuName(person.getName());
+        return new ImpossibilityMenu(menus);
     }
 }

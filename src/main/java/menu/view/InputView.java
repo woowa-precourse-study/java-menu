@@ -1,6 +1,5 @@
 package menu.view;
 
-import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
 import java.util.Scanner;
 
