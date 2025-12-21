@@ -1,6 +1,5 @@
 package menu;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,6 +11,7 @@ import menu.domain.ImpossibilityMenus;
 import menu.domain.MenuBoard;
 import menu.domain.Person;
 import menu.domain.Persons;
+import menu.domain.RecommendationFoodCategories;
 import menu.view.InputView;
 import menu.view.OutputView;
 
@@ -29,16 +29,9 @@ public class MenuRecommendation {
         outputView.printStartApplication();
         Persons persons = retryOnError(this::getPersons);
         ImpossibilityMenus impossibilityMenus = getImpossibilityMenus(persons);
-        List<FoodCategory> categories = new ArrayList<>();
-        while (categories.size() < 5) {
-            FoodCategory category = FoodCategory.from(Randoms.pickNumberInRange(1, 5));
-            List<FoodCategory> foodCategories = categories.stream()
-                    .filter(existingCategory -> existingCategory == category)
-                    .toList();
-            if (foodCategories.size() < 2) {
-                categories.add(category);
-            }
-        }
+
+        RecommendationFoodCategories recommendationFoodCategories = new RecommendationFoodCategories();
+        List<FoodCategory> categories = recommendationFoodCategories.getRecommendationFoodCategories();
         Map<Person, List<String>> recommendMenus = new LinkedHashMap<>();
         for (Person person : persons.getPersons()) {
             recommendMenus.put(person, new ArrayList<>());

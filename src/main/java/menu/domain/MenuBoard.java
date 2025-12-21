@@ -15,15 +15,16 @@ public class MenuBoard {
             FoodCategory.WESTERN, List.of("라자냐", "그라탱", "뇨끼", "끼슈", "프렌치 토스트", "바게트", "스파게티", "피자", "파니니")
     );
 
-    private MenuBoard() {}
+    private MenuBoard() {
+    }
 
     public static void validateMenuName(String menuName) {
-        for (List<String> menus : menuBoard.values()) {
-            if (menus.contains(menuName)) {
-                return;
-            }
+        List<Boolean> isContains = menuBoard.values().stream()
+                .map(menus -> menus.contains(menuName))
+                .toList();
+        if (!isContains.contains(true)) {
+            throw new IllegalArgumentException(ErrorCode.INVALID_MENU_NAME.getMessage());
         }
-        throw new IllegalArgumentException(ErrorCode.INVALID_MENU_NAME.getMessage());
     }
 
     public static String getMenusExcluding(FoodCategory category, List<String> impossibilityMenus) {

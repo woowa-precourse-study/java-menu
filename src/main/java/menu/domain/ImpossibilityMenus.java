@@ -1,6 +1,6 @@
 package menu.domain;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +9,7 @@ public class ImpossibilityMenus {
     private final Map<Person, ImpossibilityMenu> impossibilityMenus;
 
     public ImpossibilityMenus() {
-        this.impossibilityMenus = new LinkedHashMap<>();
+        this.impossibilityMenus = new HashMap<>();
     }
 
     public void addImpossibilityMenu(Person person, ImpossibilityMenu menus) {

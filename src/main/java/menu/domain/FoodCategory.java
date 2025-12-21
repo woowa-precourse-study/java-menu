@@ -27,6 +27,22 @@ public enum FoodCategory {
                 .orElseThrow(() -> new IllegalArgumentException(ErrorCode.INVALID_NUMBER.getMessage()));
     }
 
+    public static int getFirstNumber() {
+        return Arrays.stream(values())
+                .map(category -> category.number)
+                .sorted()
+                .toList()
+                .get(0);
+    }
+
+    public static int getLastNumber() {
+        return Arrays.stream(values())
+                .map(category -> category.number)
+                .sorted((o1, o2) -> o2 - o1)
+                .toList()
+                .get(0);
+    }
+
     public String getName() {
         return name;
     }
