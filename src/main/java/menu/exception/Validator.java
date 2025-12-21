@@ -24,12 +24,36 @@ public interface Validator {
         }
     }
 
-    static void validateCoachNumber(String input, int minLength) {
+    static void validateCoachMinNumber(String input, int minLength) {
         List<String> inputs = List.of(input.split(","));
         if (inputs.size()<minLength) {
             throw new IllegalArgumentException("코치는 최소 " + minLength + "명 이상 입력해야 합니다.");
         }
     }
+
+    static void validateCoachMaxNumber(String input, int maxLength) {
+        List<String> inputs = List.of(input.split(","));
+        if (inputs.size()>maxLength) {
+            throw new IllegalArgumentException("코치는 최대 " + maxLength + "명 이하 입력해야 합니다.");
+        }
+    }
+
+    static void validateFoodMaxNumber(String input, int maxLength) {
+        List<String> inputs = List.of(input.split(","));
+        if (inputs.size()>maxLength) {
+            throw new IllegalArgumentException("못 먹는 음식은 " + maxLength + "개 이하 입력해야 합니다.");
+        }
+    }
+
+    static void validateRange(int input, int min, int max) {
+        if (input < min || input > max) {
+            throw new IllegalArgumentException(min + "부터 " + max + " 사이의 숫자만 가능합니다.");
+        }
+    }
+
+
+
+
 
 }
 
