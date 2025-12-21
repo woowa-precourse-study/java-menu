@@ -20,4 +20,8 @@ public class MenuBoard {
                 .stream()
                 .anyMatch(menus -> menus.hasMenu(menu));
     }
+
+    public Menus getMenusWith(Category category) {
+        return categoryMenus.get(category);
+    }
 }

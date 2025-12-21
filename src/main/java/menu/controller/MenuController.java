@@ -4,6 +4,7 @@ import static java.lang.String.format;
 import static menu.controller.PrintMessage.INFO;
 import static menu.controller.PrintMessage.INPUT_MENU;
 import static menu.controller.PrintMessage.INPUT_NAME;
+import static menu.factory.MenuFactory.createPerson;
 import static menu.view.InputView.readMenu;
 import static menu.view.OutputView.printError;
 import static menu.view.OutputView.printPrompt;
@@ -12,8 +13,11 @@ import java.util.List;
 import java.util.function.Supplier;
 import menu.domain.MenuRecommender;
 import menu.view.InputView;
+import menu.view.OutputView;
 
 public class MenuController {
+    private static final int DAY_COUNT = 5;
+
     private final InputParser parser;
     private MenuRecommender recommender;
 
@@ -28,6 +32,20 @@ public class MenuController {
         List<String> names = readNames();
         readMenus(names);
 
+        for (int i = 0; i < DAY_COUNT; i++) {
+            recommender = recommender.recommendMenu();
+        }
+
+        OutputView.printResult(recommender.getWeekMenus());
+    }
+
+    private List<String> readNames() {
+        return retryOnError(() -> {
+            printPrompt(INPUT_NAME);
+            String names = InputView.readName();
+
+            return parser.parseName(names);
+        });
     }
 
     private void readMenus(List<String> names) {
@@ -42,17 +60,8 @@ public class MenuController {
                 return parseMenu;
             });
 
-            recommender = recommender.addPerson(name, menus);
+            recommender = recommender.addPerson(createPerson(name, menus));
         }
-    }
-
-    private List<String> readNames() {
-        return retryOnError(() -> {
-            printPrompt(INPUT_NAME);
-            String names = InputView.readName();
-
-            return parser.parseName(names);
-        });
     }
 
     private <T> T retryOnError(Supplier<T> supplier) {

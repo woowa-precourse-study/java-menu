@@ -1,8 +1,11 @@
 package menu.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Menus {
+    public static final Menus INIT = Menus.of(List.of());
+
     private final List<String> menus;
 
     private Menus(List<String> menus) {
@@ -15,5 +18,16 @@ public class Menus {
 
     public boolean hasMenu(String menu) {
         return menus.contains(menu);
+    }
+
+    public List<String> getMenus() {
+        return menus;
+    }
+
+    public Menus addMenu(String menu) {
+        List<String> newMenus = new ArrayList<>(menus);
+        newMenus.add(menu);
+
+        return new Menus(newMenus);
     }
 }

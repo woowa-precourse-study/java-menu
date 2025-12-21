@@ -5,9 +5,12 @@ import java.util.Map;
 import menu.controller.InputParser;
 import menu.controller.MenuController;
 import menu.domain.Category;
+import menu.domain.CategoryGenerator;
 import menu.domain.MenuBoard;
 import menu.domain.MenuRecommender;
 import menu.domain.Menus;
+import menu.domain.WeekMenus;
+import menu.domain.categorygenerator.RandomCategoryGenerator;
 
 public class ApplicationFactory {
 
@@ -19,11 +22,15 @@ public class ApplicationFactory {
         return new InputParser();
     }
 
-    private MenuRecommender menuRecommender() {
-        return new MenuRecommender(initMenuBoard());
+    public MenuRecommender menuRecommender() {
+        return new MenuRecommender(initMenuBoard(), categoryGenerator(), WeekMenus.INIT);
     }
 
-    private MenuBoard initMenuBoard() {
+    private CategoryGenerator categoryGenerator() {
+        return new RandomCategoryGenerator();
+    }
+
+    public MenuBoard initMenuBoard() {
         Map<Category, Menus> initMenus = Map.ofEntries(
                 Map.entry(Category.JAPANESE, Menus.of(initJapanese())),
                 Map.entry(Category.KOREAN, Menus.of(initKorean())),

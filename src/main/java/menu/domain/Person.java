@@ -4,10 +4,22 @@ import java.util.List;
 
 public class Person {
     private final String name;
-    private final Menus menus;
+    private final Menus hateMenus;
 
-    public Person(String name, List<String> menus) {
+    private Person(String name, List<String> menus) {
         this.name = name;
-        this.menus = Menus.of(menus);
+        this.hateMenus = Menus.of(menus);
+    }
+
+    public static Person from(String name, List<String> menus) {
+        return new Person(name, menus);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean hasMenu(String menu) {
+        return hateMenus.hasMenu(menu);
     }
 }

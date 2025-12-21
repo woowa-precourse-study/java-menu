@@ -5,18 +5,39 @@ import menu.exception.ErrorMessage;
 
 public class MenuRecommender {
     private final MenuBoard board;
+    private final CategoryGenerator categoryGenerator;
+    private final WeekMenus weekMenus;
 
-    public MenuRecommender(MenuBoard board) {
+    public MenuRecommender(MenuBoard board, CategoryGenerator categoryGenerator, WeekMenus weekMenus) {
         this.board = board;
+        this.categoryGenerator = categoryGenerator;
+        this.weekMenus = weekMenus;
     }
 
     public void isValidMenu(List<String> parseMenu) {
-        if (board.hasMenus(parseMenu)) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATE_NAME.getMessage());
+        if (!board.hasMenus(parseMenu)) {
+            throw new IllegalArgumentException(ErrorMessage.NOT_MENU.getMessage());
         }
     }
 
-    public MenuRecommender addPerson(String name, List<String> menus) {
-        return null;
+    public MenuRecommender addPerson(Person person) {
+        WeekMenus newWeekMenus = weekMenus.addPerson(person);
+
+        return new MenuRecommender(board, categoryGenerator, newWeekMenus);
+    }
+
+    public MenuRecommender recommendMenu() {
+        Category category = categoryGenerator.generate();
+
+        while (weekMenus.validateCategoryCount(category)) {
+            category = categoryGenerator.generate();
+        }
+
+        WeekMenus newWeekMenus = weekMenus.addNewMenu(category, board);
+        return new MenuRecommender(board, categoryGenerator, newWeekMenus);
+    }
+
+    public WeekMenus getWeekMenus() {
+        return weekMenus;
     }
 }
