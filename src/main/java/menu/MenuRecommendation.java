@@ -1,9 +1,6 @@
 package menu;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
 import menu.domain.FoodCategory;
 import menu.domain.ImpossibilityMenu;
@@ -11,6 +8,7 @@ import menu.domain.ImpossibilityMenus;
 import menu.domain.MenuRecommender;
 import menu.domain.Person;
 import menu.domain.Persons;
+import menu.domain.RecommendMenus;
 import menu.domain.RecommendationFoodCategories;
 import menu.view.InputView;
 import menu.view.OutputView;
@@ -33,17 +31,14 @@ public class MenuRecommendation {
         RecommendationFoodCategories recommendationFoodCategories = new RecommendationFoodCategories();
         List<FoodCategory> categories = recommendationFoodCategories.getRecommendationFoodCategories();
 
-        Map<Person, List<String>> recommendMenus = new LinkedHashMap<>();
-        for (Person person : persons.getPersons()) {
-            recommendMenus.put(person, new ArrayList<>());
-        }
+        RecommendMenus recommendMenus = new RecommendMenus(persons);
         for (FoodCategory category : categories) {
             for (Person person : persons.getPersons()) {
                 String menu = menuRecommender.recommendMenu(person, category, recommendMenus);
-                recommendMenus.get(person).add(menu);
+                recommendMenus.addMenu(person, menu);
             }
         }
-        outputView.printRecommendationResult(categories, recommendMenus);
+        outputView.printRecommendationResult(categories, recommendMenus.getRecommendMenus());
     }
 
     private <T> T retryOnError(Supplier<T> supplier) {
