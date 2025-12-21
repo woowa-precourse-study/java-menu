@@ -9,13 +9,14 @@ public class CategoryRecommendService {
         this.randomNumberGenerator = randomNumberGenerator;
     }
 
-    public String[] recommendCategory() {
-        String[] categories = new String[5];
+    public int[] recommendCategory() {
+        int[] categories = new int[5];
         for(int i = 0 ; i < 5 ; i++){
             int random = randomNumberGenerator.generate();
 
             // 메뉴로 변경?
-            categories[i] = String.valueOf(random);
+//            categories[i] = String.valueOf(random);
+            categories[i] = random;
         }
         return categories;
     }

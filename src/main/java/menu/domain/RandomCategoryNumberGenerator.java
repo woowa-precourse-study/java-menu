@@ -1,6 +1,7 @@
 package menu.domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import java.util.List;
 
 public class RandomCategoryNumberGenerator implements RandomNumberGenerator{
     private final static int RANDOM_LOWER_INCLUSIVE = 1;
@@ -11,4 +12,9 @@ public class RandomCategoryNumberGenerator implements RandomNumberGenerator{
     public int generate() {
         return Randoms.pickNumberInRange(RANDOM_LOWER_INCLUSIVE, RANDOM_UPPER_INCLUSIVE);
     }
+
+//    @Override
+//    public String generateString(List<String> menu){
+//        return "";
+//    }
 }
