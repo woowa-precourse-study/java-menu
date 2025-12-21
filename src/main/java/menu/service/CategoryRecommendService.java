@@ -20,4 +20,26 @@ public class CategoryRecommendService {
         }
         return categories;
     }
+
+//    public String[] recommendCategory() {
+//        String[] categories = new String[5];
+//        for(int i = 0 ; i < 5 ; i++){
+//            int random = randomNumberGenerator.generate();
+//
+//            String category = "";
+//            if(random == 1) {
+//                category = "JAPANESE";
+//            }else if(random == 2) {
+//                category = "KOREAN";
+//            }else if(random == 3) {
+//                category = "CHINA";
+//            }else if(random == 4) {
+//                category = "ASIAN";
+//            }else{
+//                category = "ITALIAN";
+//            }
+//            categories[i] = category;
+//        }
+//        return categories;
+//    }
 }
