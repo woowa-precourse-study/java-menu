@@ -38,14 +38,14 @@ public class MenuRecommendation {
         }
         for (FoodCategory category : categories) {
             for (Person person : persons.getPersons()) {
-                while (true) {
-                    ImpossibilityMenu impossibilityMenu = impossibilityMenus.getImpossibilityMenu(person);
-                    String menu = MenuBoard.getMenusExcluding(category, impossibilityMenu);
-                    if (!recommendMenus.get(person).contains(menu)) {
-                        recommendMenus.get(person).add(menu);
-                        break;
-                    }
+                ImpossibilityMenu impossibilityMenu = impossibilityMenus.getImpossibilityMenu(person);
+                String menu = null;
+                boolean recommended = true;
+                while (recommended) {
+                    menu = MenuBoard.getMenusExcluding(category, impossibilityMenu);
+                    recommended = !recommendMenus.get(person).contains(menu);
                 }
+                recommendMenus.get(person).add(menu);
             }
         }
         outputView.printRecommendationResult(categories, recommendMenus);
