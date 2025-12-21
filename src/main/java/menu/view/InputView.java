@@ -25,9 +25,16 @@ public class InputView {
 
     public static List<String> readRejectedMenu(String name){
         System.out.println(name + "(이)가 못 먹는 메뉴를 입력해 주세요.");
-        String inputMenu = Console.readLine();
-        List<String> names = Arrays.asList(inputMenu.split(","));
-        System.out.println();
-        return names;
+        try{
+            String inputMenu = Console.readLine();
+            List<String> names = Arrays.asList(inputMenu.split(","));
+            for(String menu : names){
+                Validator.checkMenu(menu);
+            }
+            System.out.println();
+            return names;
+        }catch(IllegalArgumentException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 }
