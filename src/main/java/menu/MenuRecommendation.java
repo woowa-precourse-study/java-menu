@@ -36,8 +36,17 @@ public class MenuRecommendation {
             impossibilityMenus.add(impossibilityMenu);
         }
         List<FoodCategory> categories = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            categories.add(FoodCategory.from(Randoms.pickNumberInRange(1, 5)));
+        while (categories.size() < 5) {
+            FoodCategory category = FoodCategory.from(Randoms.pickNumberInRange(1, 5));
+            int count = 0;
+            for (FoodCategory existingCategory : categories) {
+                if (existingCategory == category) {
+                    count++;
+                }
+            }
+            if (count < 2) {
+                categories.add(category);
+            }
         }
         Map<Person, List<String>> recommendMenus = new LinkedHashMap<>();
         for (Person person : persons.getPersons()) {
