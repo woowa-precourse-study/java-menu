@@ -11,6 +11,7 @@ import menu.domain.MenuRecommender;
 import menu.domain.Menus;
 import menu.domain.WeekMenus;
 import menu.domain.categorygenerator.RandomCategoryGenerator;
+import menu.domain.menugenerator.RandomMenuGenerator;
 
 public class ApplicationFactory {
 
@@ -23,11 +24,7 @@ public class ApplicationFactory {
     }
 
     public MenuRecommender menuRecommender() {
-        return new MenuRecommender(initMenuBoard(), categoryGenerator(), WeekMenus.INIT);
-    }
-
-    private CategoryGenerator categoryGenerator() {
-        return new RandomCategoryGenerator();
+        return new MenuRecommender(initMenuBoard(), categoryGenerator(), weekMenus());
     }
 
     public MenuBoard initMenuBoard() {
@@ -40,6 +37,14 @@ public class ApplicationFactory {
         );
 
         return new MenuBoard(initMenus);
+    }
+
+    private CategoryGenerator categoryGenerator() {
+        return new RandomCategoryGenerator();
+    }
+
+    private WeekMenus weekMenus() {
+        return WeekMenus.from(List.of(), List.of(), new RandomMenuGenerator());
     }
 
     private List<String> initJapanese() {

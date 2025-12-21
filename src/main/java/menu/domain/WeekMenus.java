@@ -3,11 +3,8 @@ package menu.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import menu.domain.menugenerator.RandomMenuGenerator;
 
 public class WeekMenus {
-    public static final WeekMenus INIT = WeekMenus.from(List.of(), List.of(), new RandomMenuGenerator());
-
     private final List<Category> categories;
     private final List<PersonWeekMenus> personWeekMenus;
     private final MenuGenerator generator;
