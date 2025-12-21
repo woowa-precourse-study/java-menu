@@ -10,6 +10,7 @@ import menu.domain.RandomCategoryNumberGenerator;
 import menu.domain.RandomNumberGenerator;
 import menu.service.CategoryRecommendService;
 import menu.service.MenuRecommendService;
+import menu.util.InputHandler;
 import menu.view.InputView;
 import menu.view.OutputView;
 import org.mockito.exceptions.misusing.CannotVerifyStubOnlyMock;
@@ -19,12 +20,11 @@ public class Application2 {
         // TODO: 프로그램 구현
         RandomNumberGenerator RandomCategoryNumberGenerator = new RandomCategoryNumberGenerator();
         CategoryRecommendService categoryRecommendService = new CategoryRecommendService(RandomCategoryNumberGenerator);
-        InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
         // 코치 이름 입력
         outputView.printStartMessage();
-        List<String> coachNames = inputView.readCoachNames();
+        List<String> coachNames = InputHandler.retry(InputView::readCoachNames);
 
         // 카테고리 추천 돌리기
         List<String> categoryNames = categoryRecommendService.recommendCategoryList();
@@ -32,7 +32,7 @@ public class Application2 {
         // 코치 정보 리스트
         List<Coach> coachList = new ArrayList<>();
         for(String coachName : coachNames) {
-            List<String> rejectedMenu = inputView.readRejectedMenu(coachName);
+            List<String> rejectedMenu = InputView.readRejectedMenu(coachName);
             Coach coach = new Coach(coachName, rejectedMenu);
             coachList.add(coach);
         }
