@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.MockedStatic;
+import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 
 public class ApplicationTest extends NsTest {
 
@@ -72,6 +73,57 @@ public class ApplicationTest extends NsTest {
             });
         }
     }
+
+    @Test
+    void 못먹는_음식_개수_0개_정상_테스트() {
+        assertSimpleTest(() -> {
+            runException("구구일,구구이","","스파게티,라자냐");
+            assertThat(output()).contains("추천을 완료했습니다.");
+        });
+    }
+
+
+    @Test
+    void 코치_이름_글자수_예외_테스트() {
+        assertSimpleTest(() -> {
+            runException("구,제임스");
+            assertThat(output()).contains("[ERROR] 코치 이름은 최소 2글자, 최대 4글자여야 합니다.");
+        });
+    }
+
+    @Test
+    void 코치_명수_부족_예외_테스트() {
+        assertSimpleTest(() -> {
+            runException("구구구");
+            assertThat(output()).contains("[ERROR] 코치는 최소 2명 이상 입력해야 합니다.");
+        });
+    }
+
+    @Test
+    void 코치_명수_초과_예외_테스트() {
+        assertSimpleTest(() -> {
+            runException("구구일,구구이,구구삼,구구사,구구오,구구구육");
+            assertThat(output()).contains("[ERROR] 코치는 최대 5명 이하 입력해야 합니다.");
+        });
+    }
+
+    @Test
+    void 코치_중복_예외_테스트() {
+        assertSimpleTest(() -> {
+            runException("구구일,구구이,구구이");
+            assertThat(output()).contains("[ERROR] 코치 이름은 중복될 수 없습니다.");
+        });
+    }
+
+    @Test
+    void 못먹는_음식_개수_예외_테스트() {
+        assertSimpleTest(() -> {
+            runException("구구일,구구이","스파게티,라자냐","스파게티,라자냐,파스타");
+            assertThat(output()).contains("[ERROR] 못 먹는 음식은 2개 이하 입력해야 합니다.");
+        });
+    }
+
+
 
     @Override
     protected void runMain() {
