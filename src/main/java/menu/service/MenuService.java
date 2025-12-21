@@ -1,6 +1,6 @@
 package menu.service;
 
-import camp.nextstep.edu.missionutils.Randoms;
+import menu.domain.Coach;
 import menu.domain.Menu;
 import menu.exception.Validator;
 import menu.util.RandomGenerator;
@@ -23,25 +23,8 @@ public class MenuService {
             }
 
             // 해당 카테고리의 음식 추천
-            List<String> menus = Menu.getFoodsByCategory(category);
-
-            for (String name : names) {
-                String menu = "INVALID";
-                if (!finalRecommenedMenu.containsKey(name)) {
-                    finalRecommenedMenu.put(name, new ArrayList<>());
-                }
-
-                while (menu.equals("INVALID")) {
-                    menu = RandomGenerator.getRandomMenu(menus);
-                    // 해당 코치가 싫어하는 음식인지 확인 + 이미 먹은 음식인지 확인
-                    if (hateMenu.get(name).contains(menu) || finalRecommenedMenu.get(name).contains(menu)) {
-                        menu = "INVALID";
-                        continue;
-                    }
-
-                    finalRecommenedMenu.get(name).add(menu);
-                }
-            }
+            Coach coach=new Coach(names,hateMenu,finalRecommenedMenu);
+            finalRecommenedMenu=coach.recommendCoachFood(category);
             recommendedCategories.add(category);
 
         }
