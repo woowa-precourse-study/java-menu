@@ -27,7 +27,7 @@ public class MenuBoard {
         }
     }
 
-    public static String getMenusExcluding(FoodCategory category, List<String> impossibilityMenus) {
+    public static String getMenusExcluding(FoodCategory category, ImpossibilityMenu impossibilityMenus) {
         List<String> menus = menuBoard.get(category);
         while (true) {
             String menu = Randoms.shuffle(menus).get(0);

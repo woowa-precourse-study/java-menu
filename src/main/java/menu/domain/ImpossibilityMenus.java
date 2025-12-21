@@ -1,7 +1,6 @@
 package menu.domain;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ImpossibilityMenus {
@@ -16,7 +15,7 @@ public class ImpossibilityMenus {
         impossibilityMenus.put(person, menus);
     }
 
-    public List<String> getImpossibilityMenu(Person person) {
-        return impossibilityMenus.get(person).getImpossibilityMenus();
+    public ImpossibilityMenu getImpossibilityMenu(Person person) {
+        return impossibilityMenus.get(person);
     }
 }

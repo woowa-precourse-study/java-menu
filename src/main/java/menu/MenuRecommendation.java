@@ -39,7 +39,7 @@ public class MenuRecommendation {
         for (FoodCategory category : categories) {
             for (Person person : persons.getPersons()) {
                 while (true) {
-                    List<String> impossibilityMenu = impossibilityMenus.getImpossibilityMenu(person);
+                    ImpossibilityMenu impossibilityMenu = impossibilityMenus.getImpossibilityMenu(person);
                     String menu = MenuBoard.getMenusExcluding(category, impossibilityMenu);
                     if (!recommendMenus.get(person).contains(menu)) {
                         recommendMenus.get(person).add(menu);
