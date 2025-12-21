@@ -1,5 +1,6 @@
 package menu.controller;
 
+import menu.service.MenuDto;
 import menu.service.MenuService;
 
 import java.util.*;
@@ -18,8 +19,8 @@ public class MenuController {
     public void run() {
         List<String> names = inputView.readCoachName();
         Map<String, List<String>> hateMenu = inputView.readHateFood(names);
-        Map<String, List<String>> finalRecommenedMenu = menuService.recommendMenu(names, hateMenu);
-        outputView.printResult(names, finalRecommenedMenu);
+        MenuDto finalRecommenedMenu = menuService.recommendMenu(names, hateMenu);
+        outputView.printResult(names, finalRecommenedMenu.getRecommendedCategories(),finalRecommenedMenu.getRecommendedFoods());
     }
 
 
