@@ -21,7 +21,7 @@ public class Menus {
     }
 
     public List<String> getMenus() {
-        return menus;
+        return List.copyOf(menus);
     }
 
     public Menus addMenu(String menu) {
