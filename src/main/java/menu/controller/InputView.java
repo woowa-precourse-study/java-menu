@@ -23,7 +23,9 @@ public class InputView {
                 input ->
                         Validator.validateCoachMinNumber(input, 2),
                 input ->
-                        Validator.validateCoachMaxNumber(input, 5)
+                        Validator.validateCoachMaxNumber(input, 5),
+                input ->
+                        Validator.validateCoachNameIsUnique(input)
         ));
 
         names = List.of(nameInput.split(","));

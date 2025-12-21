@@ -1,6 +1,8 @@
 package menu.exception;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public interface Validator {
     void validate(String input);
@@ -49,6 +51,14 @@ public interface Validator {
     static void validateRange(int input, int min, int max) {
         if (input < min || input > max) {
             throw new IllegalArgumentException(min + "부터 " + max + " 사이의 숫자만 가능합니다.");
+        }
+    }
+
+    static void validateCoachNameIsUnique(String input){
+        List<String> inputs = List.of(input.split(","));
+        Set<String> coachNameSet = new HashSet<>(inputs);
+        if (coachNameSet.size() != inputs.size()){
+            throw new IllegalArgumentException("코치 이름은 중복될 수 없습니다.");
         }
     }
 
