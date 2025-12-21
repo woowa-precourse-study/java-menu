@@ -13,28 +13,38 @@ public class CategoryRecommendService {
         this.randomNumberGenerator = randomNumberGenerator;
     }
 
-    public int[] recommendCategory() {
-        int[] categories = new int[5];
-        for(int i = 0 ; i < 5 ; i++){
-            int random = randomNumberGenerator.generate();
-            categories[i] = random;
-        }
-        return categories;
-    }
-
     public List<String> recommendCategoryList() {
         List<String> categoryList = new ArrayList<>();
-        for(int i = 0 ; i < 5 ; i++){
+        int[] status = new int[6];
+
+        while(categoryList.size() < 5) {
             int random = randomNumberGenerator.generate();
-            String category = Arrays.stream(Menu.values())
-                    .filter(val -> val.getId() == random)
-                    .findFirst()
-                    .orElse(null)
-                    .getCategory();
-            categoryList.add(category);
+            if(status[random] <2) {
+                String category = Arrays.stream(Menu.values())
+                        .filter(val -> val.getId() == random)
+                        .findFirst()
+                        .orElse(null)
+                        .getCategory();
+                categoryList.add(category);
+            }
         }
         return categoryList;
     }
 
+//    public List<String> recommendCategoryList() {
+//        List<String> categoryList = new ArrayList<>();
+//        int[] status = new int[5];
+//
+//        for(int i = 0 ; i < 5 ; i++){
+//            int random = randomNumberGenerator.generate();
+//            String category = Arrays.stream(Menu.values())
+//                    .filter(val -> val.getId() == random)
+//                    .findFirst()
+//                    .orElse(null)
+//                    .getCategory();
+//            categoryList.add(category);
+//        }
+//        return categoryList;
+//    }
 
 }
