@@ -21,10 +21,6 @@ public class ImpossibilityMenu {
         }
     }
 
-    public List<String> getImpossibilityMenus() {
-        return impossibilityMenus;
-    }
-
     public boolean contains(String menu) {
         return impossibilityMenus.contains(menu);
     }

@@ -1,7 +1,6 @@
 package menu.domain;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import menu.exception.ErrorCode;
 
 public class Persons {
@@ -15,7 +14,7 @@ public class Persons {
         validate(names);
         this.persons = names.stream()
                 .map(Person::new)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 
     private void validate(List<String> names) {

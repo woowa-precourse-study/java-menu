@@ -2,7 +2,6 @@ package menu.view;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import menu.domain.FoodCategory;
 import menu.domain.Person;
 
@@ -18,7 +17,7 @@ public class OutputView {
         System.out.println("[ 구분 | 월요일 | 화요일 | 수요일 | 목요일 | 금요일 ]");
 
         String categoryLine = String.join(" | ",
-                categories.stream().map(FoodCategory::getName).collect(Collectors.toList()));
+                categories.stream().map(FoodCategory::getName).toList());
         System.out.println("[ 카테고리 | " + categoryLine + " ]");
 
         for (Person person : menus.keySet()) {
