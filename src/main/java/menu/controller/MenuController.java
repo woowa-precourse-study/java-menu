@@ -1,8 +1,5 @@
 package menu.controller;
 
-import camp.nextstep.edu.missionutils.Randoms;
-import menu.domain.Menu;
-import menu.exception.Validator;
 import menu.service.MenuService;
 
 import java.util.*;
@@ -19,14 +16,8 @@ public class MenuController {
     }
 
     public void run() {
-        List<String> names = new ArrayList<>();
-        Map<String, List<String>> hateMenu = new LinkedHashMap<>();
-        try {
-            names = inputView.readCoachName();
-            hateMenu = inputView.readHateFood(names);
-        } catch (IllegalArgumentException | NoSuchElementException e) { // 입력안함은 여기서 자동 제거
-            System.out.println(e.getMessage());
-        }
+        List<String> names = inputView.readCoachName();
+        Map<String, List<String>> hateMenu = inputView.readHateFood(names);
         Map<String, List<String>> finalRecommenedMenu = menuService.recommendMenu(names, hateMenu);
         outputView.printResult(names, finalRecommenedMenu);
     }

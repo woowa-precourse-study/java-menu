@@ -6,8 +6,8 @@ import menu.exception.Validator;
 import java.util.*;
 
 public class InputView {
-    static String PREFIX_ERROR = "[ERROR] ";
-    static final int MAX_RETRY = 10;
+    private static String PREFIX_ERROR = "[ERROR] ";
+    private static final int MAX_RETRY = 10;
 
     /**
      * 코치 이름을 입력받는다.
@@ -37,28 +37,27 @@ public class InputView {
      */
     public Map<String, List<String>> readHateFood(List<String> names) {
         Map<String, List<String>> hateMenu = new LinkedHashMap<>();
-        try {
-            for (String name : names) {
-                hateMenu.put(name, new ArrayList<>());
-
-                System.out.printf("\n%s(이)가 못 먹는 메뉴를 입력해 주세요.\n", name);
-                String foodInput = readInputWithRetry(List.of(
-                        input ->
-                                Validator.validateFoodMaxNumber(input, 2)
-                ));
-                List<String> foods = List.of(foodInput.split(","));
-                hateMenu.replace(name, foods);
-            }
-        } catch (NullPointerException e) {
-
+        if (names==null){
+            throw new IllegalArgumentException("코치 이름이 없습니다.");
         }
+        for (String name : names) {
+            hateMenu.put(name, new ArrayList<>());
+
+            System.out.printf("\n%s(이)가 못 먹는 메뉴를 입력해 주세요.\n", name);
+            String foodInput = readInputWithRetry(List.of(
+                    input ->
+                            Validator.validateFoodMaxNumber(input, 2)
+            ));
+            List<String> foods = List.of(foodInput.split(","));
+            hateMenu.replace(name, foods);
+        }
+
         return hateMenu;
     }
 
 
     private String readInput(List<Validator> validators) {
         String input = Console.readLine();
-        System.out.println(input);
         for (Validator v : validators) {
             v.validate(input);
         }

@@ -18,39 +18,17 @@ public enum Menu {
         this.foods = foods;
     }
 
-
-    private static Map<Integer, Menu> categoryMap = new HashMap<>();
-    private static Map<String, List<String>> foodMap = new HashMap<>();
-
-    static {
-        categoryMap = generateCategoryMap();
-        foodMap = generateFoodMap();
-    }
-
-    private static Map<Integer, Menu> generateCategoryMap() {
-        int i = 1;
-        Map<Integer, Menu> menus = new HashMap<>();
-        for (Menu menu : Menu.values()) {
-            menus.put(i, menu);
-            i++;
-        }
-        return menus;
-    }
-
-
-    private static Map<String, List<String>> generateFoodMap() {
-        Map<String, List<String>> menus = new HashMap<>();
-        for (Menu menu : Menu.values()) {
-            menus.put(menu.category, List.copyOf(menu.foods));
-        }
-        return menus;
-    }
-
     public static String getCategoriesByNumber(int number) {
-        return categoryMap.get(number).category;
+        return Menu.values()[number - 1].category;
     }
 
     public static List<String> getFoodsByCategory(String category) {
-        return foodMap.get(category);
+        for (Menu menu : Menu.values()) {
+            if (menu.category.equals(category)) {
+                return menu.foods;
+            }
+        }
+        throw new IllegalArgumentException("존재하지 않는 카테고리");
     }
+
 }
