@@ -11,10 +11,6 @@ public class PersonWeekMenus {
         this.generator = generator;
     }
 
-    public static PersonWeekMenus from(Person person, Menus menus, MenuGenerator generator) {
-        return new PersonWeekMenus(person, menus, generator);
-    }
-
     public PersonWeekMenus generateMenu(Menus categoryMenus) {
         String menu = generator.generateMenu(categoryMenus);
 
@@ -32,5 +28,9 @@ public class PersonWeekMenus {
 
     public Menus getMenus() {
         return menus;
+    }
+
+    public static PersonWeekMenus from(Person person, Menus menus, MenuGenerator generator) {
+        return new PersonWeekMenus(person, menus, generator);
     }
 }

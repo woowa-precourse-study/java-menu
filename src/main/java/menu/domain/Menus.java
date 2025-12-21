@@ -12,10 +12,6 @@ public class Menus {
         this.menus = menus;
     }
 
-    public static Menus of(List<String> menus) {
-        return new Menus(menus);
-    }
-
     public boolean hasMenu(String menu) {
         return menus.contains(menu);
     }
@@ -29,5 +25,9 @@ public class Menus {
         newMenus.add(menu);
 
         return new Menus(newMenus);
+    }
+
+    public static Menus of(List<String> menus) {
+        return new Menus(menus);
     }
 }

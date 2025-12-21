@@ -18,11 +18,6 @@ public class WeekMenus {
         this.generator = generator;
     }
 
-    public static WeekMenus from(List<Category> categories, List<PersonWeekMenus> personWeekMenus,
-                                 MenuGenerator generator) {
-        return new WeekMenus(categories, personWeekMenus, generator);
-    }
-
     public WeekMenus addPerson(Person person) {
         List<PersonWeekMenus> newWeekMenus = new ArrayList<>(personWeekMenus);
 
@@ -66,5 +61,10 @@ public class WeekMenus {
         newCategories.add(category);
 
         return newCategories;
+    }
+
+    public static WeekMenus from(List<Category> categories, List<PersonWeekMenus> personWeekMenus,
+                                 MenuGenerator generator) {
+        return new WeekMenus(categories, personWeekMenus, generator);
     }
 }

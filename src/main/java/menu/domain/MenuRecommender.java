@@ -15,6 +15,10 @@ public class MenuRecommender {
     }
 
     public void isValidMenu(List<String> parseMenu) {
+        if (parseMenu.isEmpty() || parseMenu.get(0).isBlank()) {
+            return;
+        }
+
         if (!board.hasMenus(parseMenu)) {
             throw new IllegalArgumentException(ErrorMessage.NOT_MENU.getMessage());
         }

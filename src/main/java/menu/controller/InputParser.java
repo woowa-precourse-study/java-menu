@@ -1,9 +1,13 @@
 package menu.controller;
 
+import static menu.exception.ErrorMessage.DUPLICATE_NAME;
+import static menu.exception.ErrorMessage.EXCEED_VALID_COACH_COUNT;
+import static menu.exception.ErrorMessage.EXCEED_VALID_MENU_SIZE;
+import static menu.exception.ErrorMessage.NOT_VALID_NAME;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import menu.exception.ErrorMessage;
 
 public class InputParser {
     private static final String DELIMITER = ",";
@@ -28,13 +32,13 @@ public class InputParser {
 
     private void validateName(String name) {
         if (name.length() < MINIMUM_NAME_SIZE || name.length() > MAXIMUM_NAME_SIZE) {
-            throw new IllegalArgumentException(ErrorMessage.NOT_VALID_NAME.getMessage());
+            throw new IllegalArgumentException(NOT_VALID_NAME.getMessage());
         }
     }
 
     private void validateSize(List<String> result) {
         if (result.size() < MINIMUM_COACH_SIZE || result.size() > MAXIMUM_COACH_SIZE) {
-            throw new IllegalArgumentException(ErrorMessage.EXCEED_VALID_COACH_COUNT.getMessage());
+            throw new IllegalArgumentException(EXCEED_VALID_COACH_COUNT.getMessage());
         }
     }
 
@@ -42,11 +46,20 @@ public class InputParser {
         Set<String> set = new HashSet<>(result);
 
         if (set.size() != result.size()) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATE_NAME.getMessage());
+            throw new IllegalArgumentException(DUPLICATE_NAME.getMessage());
         }
     }
 
     public List<String> parseMenu(String input) {
-        return List.of(input.split(DELIMITER));
+        List<String> menus = List.of(input.split(DELIMITER));
+
+        validateMenus(menus);
+        return menus;
+    }
+
+    private void validateMenus(List<String> menus) {
+        if (menus.size() > 2) {
+            throw new IllegalArgumentException(EXCEED_VALID_MENU_SIZE.getMessage());
+        }
     }
 }
