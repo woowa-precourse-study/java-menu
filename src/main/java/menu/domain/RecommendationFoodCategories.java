@@ -23,6 +23,7 @@ public class RecommendationFoodCategories {
                 categories.add(category);
             }
         }
+
         this.recommendationFoodCategories = categories;
     }
 

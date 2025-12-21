@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 import menu.domain.FoodCategory;
 import menu.domain.ImpossibilityMenu;
 import menu.domain.ImpossibilityMenus;
-import menu.domain.MenuBoard;
+import menu.domain.MenuRecommender;
 import menu.domain.Person;
 import menu.domain.Persons;
 import menu.domain.RecommendationFoodCategories;
@@ -28,23 +28,18 @@ public class MenuRecommendation {
     public void run() {
         outputView.printStartApplication();
         Persons persons = retryOnError(this::getPersons);
-        ImpossibilityMenus impossibilityMenus = getImpossibilityMenus(persons);
+        MenuRecommender menuRecommender = getMenuRecommender(persons);
 
         RecommendationFoodCategories recommendationFoodCategories = new RecommendationFoodCategories();
         List<FoodCategory> categories = recommendationFoodCategories.getRecommendationFoodCategories();
+
         Map<Person, List<String>> recommendMenus = new LinkedHashMap<>();
         for (Person person : persons.getPersons()) {
             recommendMenus.put(person, new ArrayList<>());
         }
         for (FoodCategory category : categories) {
             for (Person person : persons.getPersons()) {
-                ImpossibilityMenu impossibilityMenu = impossibilityMenus.getImpossibilityMenu(person);
-                String menu = null;
-                boolean recommended = true;
-                while (recommended) {
-                    menu = MenuBoard.getMenusExcluding(category, impossibilityMenu);
-                    recommended = !recommendMenus.get(person).contains(menu);
-                }
+                String menu = menuRecommender.recommendMenu(person, category, recommendMenus);
                 recommendMenus.get(person).add(menu);
             }
         }
@@ -66,13 +61,13 @@ public class MenuRecommendation {
         return new Persons(personNames);
     }
 
-    private ImpossibilityMenus getImpossibilityMenus(Persons persons) {
+    private MenuRecommender getMenuRecommender(Persons persons) {
         ImpossibilityMenus impossibilityMenus = new ImpossibilityMenus();
         for (Person person : persons.getPersons()) {
             ImpossibilityMenu menu = retryOnError(() -> getImpossibilityMenu(person));
             impossibilityMenus.addImpossibilityMenu(person, menu);
         }
-        return impossibilityMenus;
+        return new MenuRecommender(impossibilityMenus);
     }
 
     private ImpossibilityMenu getImpossibilityMenu(Person person) {
