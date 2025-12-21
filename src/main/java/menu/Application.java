@@ -83,33 +83,34 @@ public class Application {
 
             for (String name:names){
                 String menu="INVALID";
-                while(menu!="INVALID"){
+                while(menu.equals("INVALID")){
                     menu = Randoms.shuffle(menus).get(0);
-                    // 해당 코치가 싫어하는 음식인지 확인
-                    if (hateMenu.get(name).contains(menu)){
+                    // 해당 코치가 싫어하는 음식인지 확인 + 이미 먹은 음식인지 확인
+                    if (hateMenu.get(name).contains(menu) || finalRecommenedMenu.get(name).contains(menu)){
                         menu="INVALID";
                         continue;
                     }
-                }
-                if (!finalRecommenedMenu.containsKey(name)){
-                    finalRecommenedMenu.put(name,new ArrayList<>());
-                }
-                finalRecommenedMenu.get(name).add(menu);
-            }
 
+                    if (!finalRecommenedMenu.containsKey(name)){
+                        finalRecommenedMenu.put(name,new ArrayList<>());
+                    }
+
+                    finalRecommenedMenu.get(name).add(menu);
+                }
+
+
+            }
 
             recommendedCategories.add(category);
 
-
         }
 
-
-
         System.out.println("메뉴 추천 결과입니다.");
-
         System.out.println("[ 구분 | 월요일 | 화요일 | 수요일 | 목요일 | 금요일 ]");
-
-
+        for (String name:names ){
+            System.out.printf("[ %s | %s ]\n",name,String.join(" | ",finalRecommenedMenu.get(name)));
+        }
+        System.out.println("추천을 완료했습니다.");
 
     }
 
