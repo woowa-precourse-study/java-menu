@@ -75,7 +75,7 @@ public class ApplicationTest extends NsTest {
 
     @Override
     protected void runMain() {
-        Application.main(new String[]{});
+        Application2.main(new String[]{});
     }
 
     private static void assertRandomTest(
