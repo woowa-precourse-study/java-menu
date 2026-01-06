@@ -20,6 +20,9 @@ public enum Category {
     }
 
     public static Category fromNumber(int number) {
+        if (number>Category.values().length){
+            throw new IllegalArgumentException("[ERROR] 추천할 수 없는 카테고리입니다.");
+        }
         return Category.values()[number - 1];
     }
 

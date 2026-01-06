@@ -32,7 +32,7 @@ public class Service {
             int num = RandomGenerator.getRandomNumber();
             try{
                 return machine.getAvailableCategory(num);
-            } catch(IllegalArgumentException e){
+            } catch(IllegalArgumentException ignored){
 
             }
         }

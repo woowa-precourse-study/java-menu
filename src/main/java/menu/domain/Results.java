@@ -13,14 +13,6 @@ public class Results {
         categories.add(category);
     }
 
-    public void add(Result result) {
-        results.add(result);
-    }
-
-    public void addFood(Result result, String food) {
-        result.add(food);
-    }
-
     public boolean isAvailableCategory(String category) {
         return Collections.frequency(categories, category) < 2;
     }
@@ -49,9 +41,5 @@ public class Results {
 
     public List<String> getCategories() {
         return categories;
-    }
-
-    public boolean isAvailable(String category) {
-        return (Collections.frequency(categories, category) < 2);
     }
 }
