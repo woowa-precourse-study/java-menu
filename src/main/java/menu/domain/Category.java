@@ -22,4 +22,12 @@ public enum Category {
     public static Category fromNumber(int number){
         return Category.values()[number-1];
     }
+
+    public String getKorName() {
+        return korName;
+    }
+
+    public List<String> getFoods() {
+        return foods;
+    }
 }

@@ -1,8 +1,8 @@
 package menu.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import menu.utils.RandomGenerator;
+
+import java.util.*;
 
 public class CrewGroup {
     private final List<Crew> crews=new ArrayList<>();
@@ -15,6 +15,29 @@ public class CrewGroup {
         if (crews.size() < 2 || crews.size() > 5) {
             throw new IllegalArgumentException("[ERROR] 코치는 최소 2명, 최대 5명까지 가능합니다.");
         }
+    }
+
+    public List<String> getCrewNames() {
+        List<String> names=new ArrayList<>();
+        for (Crew crew:crews){
+            names.add(crew.getName());
+        }
+        return names;
+    }
+
+    public Map<String,String> recommend(List<String> foods){
+        Map<String,String> results=new LinkedHashMap<>();
+        for (Crew crew:crews){
+            while(true){
+                String food = RandomGenerator.getRandomFood(foods);
+                if (!crew.isHate(food)){
+                    results.put(crew.getName(),food);
+                    break;
+                }
+            }
+        }
+        return results;
+
     }
 
     public Crew findByName(String name){
