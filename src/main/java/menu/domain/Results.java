@@ -12,6 +12,10 @@ public class Results {
         results.add(result);
     }
 
+    public List<Result> getResults() {
+        return results;
+    }
+
     public boolean isAvailable(String category){
         Map<String, Long> nameCounts = results.stream()
                 .map(Result::getCategory)

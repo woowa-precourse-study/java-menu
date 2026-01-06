@@ -37,9 +37,9 @@ public class Controller {
             }
             return crewGroup;
         }
-
-        
         );
+
+        OutputView.printResult(service.startRecommendMachine(crewGroup));
 
 
 

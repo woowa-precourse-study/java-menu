@@ -27,5 +27,7 @@ public class Machine {
         }
     }
 
-
+    public List<Result> getResults() {
+        return results.getResults();
+    }
 }

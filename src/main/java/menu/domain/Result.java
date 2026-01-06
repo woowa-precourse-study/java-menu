@@ -16,6 +16,9 @@ public class Result {
         return category;
     }
 
+    public Map<String, String> getRecommendedFood() {
+        return recommendedFood;
+    }
 
     @Override
     public boolean equals(Object o) {
