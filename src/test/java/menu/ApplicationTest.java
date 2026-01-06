@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.MockedStatic;
+import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 
 public class ApplicationTest extends NsTest {
 
@@ -71,6 +72,26 @@ public class ApplicationTest extends NsTest {
                 );
             });
         }
+    }
+
+    /**
+     * 내가 작성한 테스트
+     * **/
+
+    @Test
+    void 이름길이_예외_테스트() {
+        assertSimpleTest(() -> {
+            runException("구");
+            assertThat(output()).contains("[ERROR] 코치의 이름은 최소 2글자, 최대 4글자여야 합니다.");
+        });
+    }
+
+    @Test
+    void 코치명수_예외_테스트() {
+        assertSimpleTest(() -> {
+            runException("구구");
+            assertThat(output()).contains("[ERROR] 코치는 최소 2명, 최대 5명까지 가능합니다.");
+        });
     }
 
     @Override
