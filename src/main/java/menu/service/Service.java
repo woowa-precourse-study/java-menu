@@ -22,7 +22,7 @@ public class Service {
         DayOfWeek dayOfWeek=DayOfWeek.getStartOfWeek();
         Machine machine=new Machine(crewGroup);
         for (int i=1; i<=5;i++){
-            machine.recommend(dayOfWeek);
+            machine.todayRecommend(dayOfWeek);
         }
     }
 }
