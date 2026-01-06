@@ -1,22 +1,30 @@
 package menu.domain;
 
-import java.util.Map;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Result {
-    private final String category;
-    private final Map<String,String> recommendedFood;
+    private final String name;
+    private final List<String> recommendedFood=new ArrayList<>();
 
-    public Result(String category, Map<String, String> recommendedFood) {
-        this.category = category;
-        this.recommendedFood = recommendedFood;
+    public Result(String name) {
+        this.name = name;
     }
 
-    public String getCategory() {
-        return category;
+    public String getName() {
+        return name;
+    }
+    public void add(String food){
+        recommendedFood.add(food);
     }
 
-    public Map<String, String> getRecommendedFood() {
+    public boolean isAvailableFood(String food){
+        return !recommendedFood.contains(food);
+    }
+
+    public List<String> getRecommendedFood() {
         return recommendedFood;
     }
 
@@ -25,11 +33,11 @@ public class Result {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Result result = (Result) o;
-        return Objects.equals(category, result.category);
+        return Objects.equals(name, result.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(category);
+        return Objects.hash(name);
     }
 }

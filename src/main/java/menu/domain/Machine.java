@@ -2,7 +2,6 @@ package menu.domain;
 
 import menu.utils.RandomGenerator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,19 +14,46 @@ public class Machine {
         this.results = new Results();
     }
 
-    public void todayRecommend(DayOfWeek dayOfWeek){
-        int num = RandomGenerator.getRandomNumber();
+    public Category getAvailableCategory(int num) {
         Category category = Category.fromNumber(num);
-        while(true){
-            if (results.isAvailable(category.getKorName())){
-                List<String> foods = category.getFoods();
-                Map<String,String> result = crewGroup.recommend(foods);
-                results.add(new Result(category.getKorName(),result));
+        if (results.isAvailableCategory(category.getKorName())){
+            results.addCategory(category.getKorName());
+            return category;
+        }
+        throw new IllegalArgumentException("[ERROR] 카테고리 중복");
+    }
+
+
+    public void todayRecommend(List<String> foods) {
+        for (Crew crew : crewGroup.getCrews()) {
+            while (true) {
+                String food = RandomGenerator.getRandomFood(foods);
+                if (crew.isHate(food)) {
+                    continue;
+                }
+
+                Result result = results.findByName(crew.getName());
+                if (result.isAvailableFood(food)) {
+                    result.add(food);
+                    break;
+                }
             }
+
+
         }
     }
 
-    public List<Result> getResults() {
+
+
+    public List<String> getCrewNames(){
+        return crewGroup.getCrewNames();
+    }
+
+    public List<List<String>> getResults() {
         return results.getResults();
+    }
+
+    public List<String> getCategories() {
+        return results.getCategories();
     }
 }

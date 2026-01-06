@@ -1,6 +1,7 @@
 package menu.service;
 
 import menu.domain.*;
+import menu.utils.RandomGenerator;
 
 import java.util.List;
 
@@ -15,12 +16,27 @@ public class Service {
         return group;
     }
 
-    public List<Result> startRecommendMachine(CrewGroup crewGroup){
+    public ResultDto startRecommendMachine(CrewGroup crewGroup){
         DayOfWeek dayOfWeek=DayOfWeek.getStartOfWeek();
         Machine machine=new Machine(crewGroup);
         for (int i=1; i<=5;i++){
-            machine.todayRecommend(dayOfWeek);
+            Category category = getRandomCategory(machine);
+            machine.todayRecommend(category.getFoods());
+            dayOfWeek=dayOfWeek.getNext();
         }
-        return machine.getResults();
+        return new ResultDto(machine.getCrewNames(),machine.getCategories(),machine.getResults());
     }
+
+    private Category getRandomCategory(Machine machine) {
+        while(true){
+            int num = RandomGenerator.getRandomNumber();
+            try{
+                return machine.getAvailableCategory(num);
+            } catch(IllegalArgumentException e){
+
+            }
+        }
+    }
+
+
 }

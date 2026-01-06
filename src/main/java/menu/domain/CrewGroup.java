@@ -25,13 +25,25 @@ public class CrewGroup {
         return names;
     }
 
-    public Map<String,String> recommend(List<String> foods){
-        Map<String,String> results=new LinkedHashMap<>();
+    public int getSize() {
+        return crews.size();
+    }
+
+    public String getCrewNameByIdx(int idx) {
+        return crews.get(idx).getName();
+    }
+
+    public List<Crew> getCrews() {
+        return crews;
+    }
+
+    public List<String> recommend(List<String> foods){
+        List<String> results=new ArrayList<>();
         for (Crew crew:crews){
             while(true){
                 String food = RandomGenerator.getRandomFood(foods);
                 if (!crew.isHate(food)){
-                    results.put(crew.getName(),food);
+                    results.add(food);
                     break;
                 }
             }
