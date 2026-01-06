@@ -1,5 +1,6 @@
 package menu.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public enum Category {
@@ -24,6 +25,15 @@ public enum Category {
             throw new IllegalArgumentException("[ERROR] 추천할 수 없는 카테고리입니다.");
         }
         return Category.values()[number - 1];
+    }
+
+    public static void isAvailableFood(String food){
+        for(Category category:Category.values()){
+            if (category.foods.contains(food)){
+                return;
+            }
+        }
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 음식입니다.");
     }
 
     public String getKorName() {

@@ -1,6 +1,7 @@
 package menu.controller;
 
 import camp.nextstep.edu.missionutils.Console;
+import menu.domain.Category;
 import menu.domain.Crew;
 import menu.domain.CrewGroup;
 import menu.service.Service;
@@ -30,6 +31,9 @@ public class Controller {
         doRetry(() -> {
                     for (String name : crewGroup.getCrewNames()) {
                         List<String> foods = inputView.readHateFood(name);
+                        for (String food:foods){
+                            Category.isAvailableFood(food);
+                        }
                         Crew crew = crewGroup.findByName(name);
                         crew.addFood(foods);
                     }
