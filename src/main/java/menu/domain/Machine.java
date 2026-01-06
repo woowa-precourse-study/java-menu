@@ -3,7 +3,6 @@ package menu.domain;
 import menu.utils.RandomGenerator;
 
 import java.util.List;
-import java.util.Map;
 
 public class Machine {
     private final CrewGroup crewGroup;
@@ -16,7 +15,7 @@ public class Machine {
 
     public Category getAvailableCategory(int num) {
         Category category = Category.fromNumber(num);
-        if (results.isAvailableCategory(category.getKorName())){
+        if (results.isAvailableCategory(category.getKorName())) {
             results.addCategory(category.getKorName());
             return category;
         }
@@ -38,14 +37,11 @@ public class Machine {
                     break;
                 }
             }
-
-
         }
     }
 
 
-
-    public List<String> getCrewNames(){
+    public List<String> getCrewNames() {
         return crewGroup.getCrewNames();
     }
 

@@ -15,11 +15,6 @@ public enum DayOfWeek {
         return MON;
     }
 
-    public String getKorName() {
-        return korName;
-    }
-
-
     public DayOfWeek getNext() {
         return DayOfWeek.values()[this.number % 5];
     }

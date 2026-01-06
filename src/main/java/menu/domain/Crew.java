@@ -7,15 +7,15 @@ import java.util.Objects;
 
 public class Crew {
     private final String name;
-    private final List<String> hateFoods=new ArrayList<>();
+    private final List<String> hateFoods = new ArrayList<>();
 
     public Crew(String name) {
         validateNameLength(name);
         this.name = name;
     }
 
-    private void validateNameLength(String name){
-        if (name.length()<2 || name.length()>4){
+    private void validateNameLength(String name) {
+        if (name.length() < 2 || name.length() > 4) {
             throw new IllegalArgumentException("[ERROR] 코치의 이름은 최소 2글자, 최대 4글자여야 합니다.");
         }
     }
@@ -24,11 +24,11 @@ public class Crew {
         return name;
     }
 
-    public void addFood(List<String> foods){
+    public void addFood(List<String> foods) {
         Collections.addAll(foods);
     }
 
-    public boolean isHate(String name){
+    public boolean isHate(String name) {
         return hateFoods.contains(name);
     }
 

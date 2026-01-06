@@ -1,13 +1,11 @@
 package menu.domain;
 
-import menu.utils.RandomGenerator;
-
 import java.util.*;
 
 public class CrewGroup {
-    private final List<Crew> crews=new ArrayList<>();
+    private final List<Crew> crews = new ArrayList<>();
 
-    public void add(Crew crew){
+    public void add(Crew crew) {
         crews.add(crew);
     }
 
@@ -18,41 +16,18 @@ public class CrewGroup {
     }
 
     public List<String> getCrewNames() {
-        List<String> names=new ArrayList<>();
-        for (Crew crew:crews){
+        List<String> names = new ArrayList<>();
+        for (Crew crew : crews) {
             names.add(crew.getName());
         }
         return names;
-    }
-
-    public int getSize() {
-        return crews.size();
-    }
-
-    public String getCrewNameByIdx(int idx) {
-        return crews.get(idx).getName();
     }
 
     public List<Crew> getCrews() {
         return crews;
     }
 
-    public List<String> recommend(List<String> foods){
-        List<String> results=new ArrayList<>();
-        for (Crew crew:crews){
-            while(true){
-                String food = RandomGenerator.getRandomFood(foods);
-                if (!crew.isHate(food)){
-                    results.add(food);
-                    break;
-                }
-            }
-        }
-        return results;
-
-    }
-
-    public Crew findByName(String name){
+    public Crew findByName(String name) {
         Optional<Crew> crew = crews.stream()
                 .filter(a -> a.getName().equals(name))
                 .findFirst();
@@ -61,9 +36,6 @@ public class CrewGroup {
                 () -> new IllegalArgumentException("[ERROR] 등록되지 않은 닉네임입니다.")
         );
     }
-
-
-
 
 
 }

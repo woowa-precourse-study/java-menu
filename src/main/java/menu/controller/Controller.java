@@ -21,32 +21,24 @@ public class Controller {
     }
 
     public void run() {
-
-
-        CrewGroup crewGroup = doRetry(() ->{
-            List<String> names=inputView.readCoach();
+        CrewGroup crewGroup = doRetry(() -> {
+                    List<String> names = inputView.readCoach();
                     return service.getCrewGroup(names);
                 }
         );
 
-        doRetry(() ->{
-            for (String name: crewGroup.getCrewNames()){
-                List<String> foods=inputView.readHateFood(name);
-                Crew crew = crewGroup.findByName(name);
-                crew.addFood(foods);
-            }
-            return crewGroup;
-        }
+        doRetry(() -> {
+                    for (String name : crewGroup.getCrewNames()) {
+                        List<String> foods = inputView.readHateFood(name);
+                        Crew crew = crewGroup.findByName(name);
+                        crew.addFood(foods);
+                    }
+                    return crewGroup;
+                }
         );
-
         OutputView.printResult(service.startRecommendMachine(crewGroup));
 
-
-
-
     }
-
-
 
     private <T> T doRetry(Supplier<T> action) {
         int retry = 0;
