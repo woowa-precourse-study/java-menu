@@ -1,10 +1,13 @@
 package menu.controller;
 
+import camp.nextstep.edu.missionutils.Console;
 import menu.domain.Crew;
 import menu.domain.CrewGroup;
 import menu.service.Service;
+import menu.utils.Parser;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
 public class Controller {
@@ -19,11 +22,27 @@ public class Controller {
 
     public void run() {
 
+
         CrewGroup crewGroup = doRetry(() ->{
             List<String> names=inputView.readCoach();
                     return service.getCrewGroup(names);
                 }
         );
+
+        doRetry(() ->{
+            for (String name: crewGroup.getCrewNames()){
+                List<String> foods=inputView.readHateFood(name);
+                Crew crew = crewGroup.findByName(name);
+                crew.addFood(foods);
+            }
+            return crewGroup;
+        }
+
+        
+        );
+
+
+
 
     }
 

@@ -20,8 +20,7 @@ public class InputView {
 
     public List<String> readHateFood(String name) {
         System.out.printf("\n%s(이)가 못 먹는 메뉴를 입력해 주세요.\n",name);
-        String input = readInput(List.of(
-        ));
+        String input = Console.readLine().trim();
         return Parser.splitBy(input,",");
     }
 
