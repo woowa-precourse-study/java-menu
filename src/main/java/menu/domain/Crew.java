@@ -25,6 +25,9 @@ public class Crew {
     }
 
     public void addFood(List<String> foods) {
+        if (foods.size()>2){
+            throw new IllegalArgumentException("[ERROR] 못 먹는 음식은 최대 2개까지 입력 가능합니다.");
+        }
         Collections.addAll(foods);
     }
 

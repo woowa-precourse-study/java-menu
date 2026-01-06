@@ -4,8 +4,10 @@ import camp.nextstep.edu.missionutils.Console;
 import menu.exception.Validator;
 import menu.utils.Parser;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -20,8 +22,14 @@ public class InputView {
 
     public List<String> readHateFood(String name) {
         System.out.printf("\n%s(이)가 못 먹는 메뉴를 입력해 주세요.\n", name);
-        String input = Console.readLine().trim();
-        return Parser.splitBy(input, ",");
+        try{
+            String input = Console.readLine().trim();
+            return Arrays.stream(input.split(",", -1))
+                    .map(String::trim)
+                    .collect(Collectors.toList());
+        } catch (NoSuchElementException e){
+            return List.of();
+        }
     }
 
     private String readInput(List<Validator> validators) {
