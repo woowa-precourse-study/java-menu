@@ -1,4 +1,4 @@
-package menu.util;
+package menu.utils;
 
 import camp.nextstep.edu.missionutils.Randoms;
 
@@ -12,10 +12,8 @@ public class RandomGenerator {
         return Randoms.pickNumberInRange(START_NUMBER, END_NUMBER);
     }
 
-    public static String getRandomMenu(List<String> menus) {
-        return Randoms.shuffle(menus).get(0);
+    public static String getRandomFood(List<String> foods) {
+        return Randoms.shuffle(foods).get(0);
     }
-
-
 
 }

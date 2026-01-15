@@ -1,15 +1,15 @@
 package menu;
 
-import menu.controller.MenuController;
-import menu.service.MenuService;
+import menu.controller.Controller;
+import menu.service.Service;
 
 public class Application {
 
     public static void main(String[] args) {
-        MenuService menuService = new MenuService();
-        MenuController menuController = new MenuController(menuService);
+        Service service = new Service();
+        Controller controller = new Controller(service);
         try {
-            menuController.run();
+            controller.run();
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }
